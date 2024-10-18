@@ -1,5 +1,7 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using static Unity.VisualScripting.Member;
 
 public class ProjectileController : MonoBehaviour
 {
@@ -33,13 +35,18 @@ public class ProjectileController : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         transform.position = targetPosition;
-        DestroyProjectile();
     }
 
-    private void DestroyProjectile()
+    private void OnTriggerEnter(Collider other)
     {
-        m_explosionVFX.transform.parent = null;
-        m_explosionVFX.Play();
-        Destroy(gameObject);
+        if (other.CompareTag("Player"))
+        {
+            other.gameObject.tag = "Collider";
+
+
+        }
     }
+
+
+
 }
